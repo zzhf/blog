@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-09-01T17:17:45.805Z</updated>
+  <updated>2017-09-06T15:53:25.522Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -16,13 +16,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>mongoose学习笔记</title>
+    <link href="https://zzhf.github.com/2017/09/06/mongoose%20note/"/>
+    <id>https://zzhf.github.com/2017/09/06/mongoose note/</id>
+    <published>2017-09-06T14:14:51.000Z</published>
+    <updated>2017-09-06T15:53:25.522Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在自己鼓捣node.js，尝试着使用express + mongoose搭建自己的web服务器，在这把mongoose的一些收获和知识点记录下来。<br>因为之前一直使用的是java操作MongoDB，对java实体类与Map对象的互转累觉不爱啊。<br><a id="more"></a></p>
+<h4 id="Connect-to-MongoDB"><a href="#Connect-to-MongoDB" class="headerlink" title="Connect to MongoDB"></a>Connect to MongoDB</h4><figure class="highlight plain"><figcaption><span>index.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var mongoose = require(&apos;mongoose&apos;);</div><div class="line">//连接Mongo数据库</div><div class="line">mongoose.connect(&apos;mongodb://localhost/test&apos;); </div><div class="line"></div><div class="line">//监听Mongo首次连接事件</div><div class="line">db.once(&apos;open&apos; ,() =&gt; &#123; </div><div class="line">	console.log(&apos;连接数据库成功&apos;)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">//监听Mongo异常并重连</div><div class="line">db.on(&apos;error&apos;, function(error) &#123;</div><div class="line">    console.error(&apos;Error in MongoDb connection: &apos; + error);</div><div class="line">    mongoose.disconnect();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">db.on(&apos;close&apos;, function() &#123;</div><div class="line">    console.log(&apos;数据库断开，重新连接数据库&apos;);</div><div class="line">    mongoose.connect(config.url, &#123;server:&#123;auto_reconnect:true&#125;&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="Schema"><a href="#Schema" class="headerlink" title="Schema"></a>Schema</h4><p>首次接触mongoose的是Schema。Schema可以理解为表结构的定义，虽然mongo并没有表这个概念，类似与java中pojo实体类。<br>定义一个简单的Scheam</p>
+<figure class="highlight plain"><figcaption><span>index.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var mongoose = require(&apos;mongoose&apos;);</div><div class="line">var Schema = mongoose.Schema;</div><div class="line"></div><div class="line">//定义对象blogSchema</div><div class="line">var blogSchema = new Schema(&#123;</div><div class="line">	title: String,</div><div class="line">	author: String,</div><div class="line">	body: String,</div><div class="line">	commets: [&#123;body: String, date: Date&#125;],</div><div class="line">	date: &#123;type: Date, defult: Date.now&#125;,</div><div class="line">	hidden: boolean,</div><div class="line">	meta: &#123;</div><div class="line">		votes: Number,</div><div class="line">		favs: Number</div><div class="line">	&#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">//将blogSchema发布为model,并且指定collection名为blog_c;</div><div class="line">var blog = db.model(&apos;blog_c&apos;, blogSchema); </div></pre></td></tr></table></figure>
+<p>Scheam只是单纯的定义了mongoDB里面的document结构，通过Scheam可以定义字段的类型、唯一性、索引和验证；</p>
+<h4 id="Schema可以定义的字段的类型有："><a href="#Schema可以定义的字段的类型有：" class="headerlink" title="Schema可以定义的字段的类型有："></a>Schema可以定义的字段的类型有：</h4><ul>
+<li>String   </li>
+<li>Number    </li>
+<li>Date        </li>
+<li>Buffer    </li>
+<li>Boolean    </li>
+<li>Mixed        </li>
+<li>ObjectId    </li>
+<li>Array        </li>
+</ul>
+<h4 id="一个包含所有类型Schema的实现"><a href="#一个包含所有类型Schema的实现" class="headerlink" title="一个包含所有类型Schema的实现"></a>一个包含所有类型Schema的实现</h4><figure class="highlight plain"><figcaption><span>index.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var mongoose = require(&apos;mongoose&apos;);</div><div class="line">var Schema = mongoose.Schema;</div><div class="line"></div><div class="line">var blogSchema = new Schema(&#123;</div><div class="line">	title: String,</div><div class="line">	author: String,</div><div class="line">	body: String,</div><div class="line">	commets: [&#123;body: String, date: Date&#125;],</div><div class="line">	date: &#123;type: Date, defult: Date.now&#125;,</div><div class="line">	hidden: boolean,</div><div class="line">	meta: &#123;</div><div class="line">		votes: Number,</div><div class="line">		favs: Number</div><div class="line">	&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>通过执行node index.js就可以看见你的mongo库里面插入了一条包含各种数据类型的字段的Document记录；</p>
+<h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><p>通过node+mongoose来操作Mongo确实比java来的方便的许多,比较JS原生支持json格式的数据。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在自己鼓捣node.js，尝试着使用express + mongoose搭建自己的web服务器，在这把mongoose的一些收获和知识点记录下来。&lt;br&gt;因为之前一直使用的是java操作MongoDB，对java实体类与Map对象的互转累觉不爱啊。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="mongoose" scheme="https://zzhf.github.com/tags/mongoose/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Start Blog Journey</title>
     <link href="https://zzhf.github.com/2017/09/02/Start-Blog-Journey/"/>
     <id>https://zzhf.github.com/2017/09/02/Start-Blog-Journey/</id>
     <published>2017-09-01T16:41:51.000Z</published>
-    <updated>2017-09-01T17:17:45.805Z</updated>
+    <updated>2017-09-06T14:46:06.217Z</updated>
     
-    <content type="html"><![CDATA[<p>最近开始闲下来，兴趣之余决定开始搭建一个属于自己的博客。博客内容涉及的内容比较宽泛，涉及的话题主要有前端学习笔记及一些日常的牢骚，如果大家感兴趣的话可以访问我的 <a href="https://github.com/zzhf" target="_blank" rel="external">github</a> 关注。 如果有什么好的意见或建议可以在我的blog下提 <a href="https://github.com/zzhf/blog" target="_blank" rel="external">Issues</a> 。</p>
+    <content type="html"><![CDATA[<p>最近开始闲下来，兴趣之余决定开始搭建一个属于自己的博客。博客内容涉及的内容比较宽泛，涉及的话题主要有前端学习笔记及一些日常的牢骚，如果大家感兴趣的话可以访问我的 <a href="https://github.com/zzhf" target="_blank" rel="external">github</a> 关注。 如果有什么好的意见或建议可以在我的blog下提 <a href="https://github.com/zzhf/blog" target="_blank" rel="external">Issues</a> 。<br><a id="more"></a></p>
 <h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><p>为了充分发扬拿来主义的精神，切忌重复造轮子。此博客系统是使用 <a href="https://hexo.io/" target="_blank" rel="external">hexo</a> 搭建，主题选用的是 <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank" rel="external">apollo</a>。<br>在众多hexo主题当中，这个仿VUE中文站的风格确实是及其养眼的，尤其是在移动设备上的展示效果，毕竟<a href="https://cn.vuejs.org/" target="_blank" rel="external">VUE中文站</a> 移动端效果还是让人眼前一亮的。</p>
 <p>第一次写blog也不知道要说点啥，那就点到为止吧。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Hello World! Hello Blog!</div></pre></td></tr></table></figure>
@@ -31,7 +69,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;最近开始闲下来，兴趣之余决定开始搭建一个属于自己的博客。博客内容涉及的内容比较宽泛，涉及的话题主要有前端学习笔记及一些日常的牢骚，如果大家感兴趣的话可以访问我的 &lt;a href=&quot;https://github.com/zzhf&quot; target=&quot;_blank&quot; rel=&quot;e
+      &lt;p&gt;最近开始闲下来，兴趣之余决定开始搭建一个属于自己的博客。博客内容涉及的内容比较宽泛，涉及的话题主要有前端学习笔记及一些日常的牢骚，如果大家感兴趣的话可以访问我的 &lt;a href=&quot;https://github.com/zzhf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt; 关注。 如果有什么好的意见或建议可以在我的blog下提 &lt;a href=&quot;https://github.com/zzhf/blog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Issues&lt;/a&gt; 。&lt;br&gt;
     
     </summary>
     
