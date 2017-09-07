@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-09-06T15:53:25.522Z</updated>
+  <updated>2017-09-07T17:35:48.768Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ES6 编码规范</title>
+    <link href="https://zzhf.github.com/2017/09/08/ES6-Coding-Style/"/>
+    <id>https://zzhf.github.com/2017/09/08/ES6-Coding-Style/</id>
+    <published>2017-09-07T16:42:23.000Z</published>
+    <updated>2017-09-07T17:35:48.768Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要规范ES6及传统的JavaScript语法结合的编写风格，便于写出合理的、易于阅读的和维护的代码，<br>下面主要的内容是参考了阮一峰老师的 <a href="http://es6.ruanyifeng.com/#docs/style" target="_blank" rel="external">ECMAScript 6 入门</a>;</p>
+<a id="more"></a>
+<h4 id="1-块级作用域"><a href="#1-块级作用域" class="headerlink" title="1.块级作用域"></a>1.块级作用域</h4><h5 id="1-1-let取代var"><a href="#1-1-let取代var" class="headerlink" title="1.1 let取代var"></a>1.1 let取代var</h5><p>ES6提出了两个新的声明变量的命令： let和const。其中，let完全可以取代var，因为两者语义相同，而且let没有副作用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">	<span class="keyword">let</span> x = <span class="string">'Hello'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">	<span class="built_in">console</span>.log(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码如果用var替代let，实际上就声明了两个全局变量，这显然不是本意。变量应该只在其声明的代码块内有效，var命令做不到这一点。</p>
+<p>var命令存在变量提升效用，let命令没有这个问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">	<span class="built_in">console</span>.log(x); <span class="comment">//ReferenceError</span></div><div class="line">	<span class="keyword">let</span> x = <span class="string">'Hello'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码如果使用var替代let，console.log那一行就不会报错，而是会输出undefined，因为变量声明提升到代码块的头部。这违反了变量先声明后使用的原则。</p>
+<p>所以，建议不再使用var命令，而是使用let命令取代。</p>
+<h5 id="1-2-全局常量和线程安全"><a href="#1-2-全局常量和线程安全" class="headerlink" title="1.2 全局常量和线程安全"></a>1.2 全局常量和线程安全</h5><p>在let和const之间，建议优先使用const，尤其是在全局环境，不应该设置变量，只应设置常量。</p>
+<p>const优于let有几个原因。一个是const可以提醒阅读程序的人，这个变量不应该改变；另一个是const比较符合函数式编程思想，运算不改变值，只是新建值，而且这样也有利于将来的分布式运算；最后一个原因是 JavaScript 编译器会对const进行优化，所以多使用const，有利于提供程序的运行效率，也就是说let和const的本质区别，其实是编译器内部的处理不同。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//bad</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">//good</span></div><div class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</div><div class="line"><span class="keyword">const</span> c = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">//best</span></div><div class="line"><span class="keyword">const</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div></pre></td></tr></table></figure>
+<p>const声明常量还有两个好处，一是阅读代码的人立刻会意识到不应该修改这个值，二是防止了无意间修改变量值所导致的错误。</p>
+<p>所有的函数都应该设置为常量。</p>
+<p>长远来看，JavaScript可能会有多线程的实现（比如Intel的River Trail那一类的项目），这时let表示的变量，只应出现在单线程运行的代码中，不能是多线程共享的，这样有利于保证线程安全。</p>
+<h4 id="2-字符串"><a href="#2-字符串" class="headerlink" title="2.字符串"></a>2.字符串</h4><p>静态字符串一律使用单引号或反引号，不使用双引号。动态字符串使用反引号。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//bad</span></div><div class="line"><span class="keyword">const</span> a = <span class="string">"foobar"</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="string">'foo'</span> + a + <span class="string">'bar'</span>;</div><div class="line"></div><div class="line"><span class="comment">//acceptable</span></div><div class="line"><span class="keyword">const</span> c = <span class="string">`foobar`</span>;</div><div class="line"></div><div class="line"><span class="comment">//good</span></div><div class="line"><span class="keyword">const</span> a = <span class="string">'foobar'</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="string">`foo<span class="subst">$&#123;a&#125;</span>bar`</span>;</div></pre></td></tr></table></figure>
+<h4 id="3-解构赋值"><a href="#3-解构赋值" class="headerlink" title="3.解构赋值"></a>3.解构赋值</h4><p>使用数组成员对变量赋值时，优先使用解构赋值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</div><div class="line"></div><div class="line"><span class="comment">//bad</span></div><div class="line"><span class="keyword">const</span> first = arr[<span class="number">0</span>];</div><div class="line"><span class="keyword">const</span> secod = arr[<span class="number">1</span>];</div><div class="line"></div><div class="line"><span class="comment">//good</span></div><div class="line"><span class="keyword">const</span>[first, second] = arr;</div></pre></td></tr></table></figure>
+<p>函数的参数如果是对象的成员，优先使用解构赋值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//bad </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">user</span>) </span>&#123;</div><div class="line">	<span class="keyword">const</span> firstName = user.firstName;</div><div class="line">	<span class="keyword">const</span> lastName = user.lastName;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">	<span class="keyword">const</span> &#123; firstName, lastName &#125; = obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//best</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">&#123; firstName, lastName &#125;</span>) </span>&#123;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>如果函数返回多个值，优先使用对象的解构赋值，而不是数组的解构赋值。这样便于以后添加返回值，以及更改返回值的顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">processInput</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> [left, right, top, bottom];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">processInput</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> &#123; left, right, top, bottom &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> &#123; left, right &#125; = processInput(input);</div></pre></td></tr></table></figure>
+<h4 id="4-对象"><a href="#4-对象" class="headerlink" title="4.对象"></a>4.对象</h4><p>单行定义的对象，最后一个成员不以逗号结尾。多行定义的对象，最后一个成员以逗号结尾。</p>
+<h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><p>未完待续。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要规范ES6及传统的JavaScript语法结合的编写风格，便于写出合理的、易于阅读的和维护的代码，&lt;br&gt;下面主要的内容是参考了阮一峰老师的 &lt;a href=&quot;http://es6.ruanyifeng.com/#docs/style&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ECMAScript 6 入门&lt;/a&gt;;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="ES6 JavaScript" scheme="https://zzhf.github.com/tags/ES6-JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>mongoose学习笔记</title>
