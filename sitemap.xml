@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zzhf.github.com/2017/09/06/mongoose%20note/</loc>
+    
+    <lastmod>2017-09-11T15:20:10.289Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zzhf.github.com/2017/09/09/ES6%20Temporay%20Dead%20Zone/</loc>
     
     <lastmod>2017-09-11T15:11:13.056Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://zzhf.github.com/2017/09/08/ES6-Coding-Style/</loc>
     
     <lastmod>2017-09-10T17:22:39.855Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zzhf.github.com/2017/09/06/mongoose%20note/</loc>
-    
-    <lastmod>2017-09-10T17:16:29.939Z</lastmod>
     
   </url>
   
