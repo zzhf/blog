@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-10-18T15:59:45.488Z</updated>
+  <updated>2017-10-21T07:53:25.566Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>瀑布流布局实现方案</title>
+    <link href="https://zzhf.github.com/2017/10/21/%E6%B8%A5%E5%85%B0%E7%BD%91%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/"/>
+    <id>https://zzhf.github.com/2017/10/21/渥兰网页面布局实现方案/</id>
+    <published>2017-10-21T07:24:10.000Z</published>
+    <updated>2017-10-21T07:53:25.566Z</updated>
+    
+    <content type="html"><![CDATA[<p>周末空闲准备找部电影研究研究，最近《狙击精英：巅峰对决》挺火的，所以穷逼准备在网上搜索链接下载学习研究，无奈多次搜索未果，且大部分搜出来的链接都坏链。但是功夫不负有心人啊终于在<a href="http://www.oneland.org/" target="_blank" rel="external">渥兰网</a>这个重未听说过的资源网站上下到了自己想要的学习资料，在下载的过程中该网站的首页让我产生了浓厚的<code>F12</code>的兴趣。</p>
+<a id="more"></a>
+<h4 id="1-瀑布流自适应是如何实现的？"><a href="#1-瀑布流自适应是如何实现的？" class="headerlink" title="1.瀑布流自适应是如何实现的？"></a>1.瀑布流自适应是如何实现的？</h4><p>  当我第一次看见这种页面布局时，内心想的是肯定用的是column式布局，但是当我按下<code>F12</code>之后发现我的想法是完全错误，其布局实现方式主要是通过float使每一个海报项浮动起来，然后通过transform来控制每一个海报项位置,这样亦解决了float元素的一个填充对齐问题。但是问题来了transform的位移值是如何确定的？ </p>
+<h6 id="1-1-如何确定位移值"><a href="#1-1-如何确定位移值" class="headerlink" title="1.1 如何确定位移值"></a>1.1 如何确定位移值</h6><p>  经过不断搜索该网站源代码发现他用的是一个叫<a href="https://github.com/metafizzy/isotope" target="_blank" rel="external">isotope</a>的插件。在github上翻看源码发现isotope是通过 原理实现的。</p>
+<p>  <code>//TODO</code></p>
+<h4 id="2-其无限加载是怎么实现的？"><a href="#2-其无限加载是怎么实现的？" class="headerlink" title="2.其无限加载是怎么实现的？"></a>2.其无限加载是怎么实现的？</h4><p>  在该网站中的无限加载是使用<a href="http://www.infinite-scroll.com" target="_blank" rel="external">infinitescroll</a>插件实现的，其实现的主要原理是</p>
+<p>  <code>//TODO</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;周末空闲准备找部电影研究研究，最近《狙击精英：巅峰对决》挺火的，所以穷逼准备在网上搜索链接下载学习研究，无奈多次搜索未果，且大部分搜出来的链接都坏链。但是功夫不负有心人啊终于在&lt;a href=&quot;http://www.oneland.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;渥兰网&lt;/a&gt;这个重未听说过的资源网站上下到了自己想要的学习资料，在下载的过程中该网站的首页让我产生了浓厚的&lt;code&gt;F12&lt;/code&gt;的兴趣。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="瀑布流 infinitescroll imagesLoaded" scheme="https://zzhf.github.com/tags/%E7%80%91%E5%B8%83%E6%B5%81-infinitescroll-imagesLoaded/"/>
+    
+  </entry>
   
   <entry>
     <title>统计局行政区划数据抓取记录</title>
