@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-11-17T16:06:59.298Z</updated>
+  <updated>2017-11-29T15:24:52.742Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于ELK搭建日志监控平台</title>
+    <link href="https://zzhf.github.com/2017/11/29/%E5%9F%BA%E4%BA%8EELK%E6%90%AD%E5%BB%BA%E6%97%A5%E5%BF%97%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0/"/>
+    <id>https://zzhf.github.com/2017/11/29/基于ELK搭建日志监控平台/</id>
+    <published>2017-11-29T15:18:44.000Z</published>
+    <updated>2017-11-29T15:24:52.742Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司产品一直没有个真正的日志监控系统，现在的日志系统的是通过实现<code>javax.servlet.Filter</code>来实现访问的监控，这种方式在使用过程遇到了非常多的问题，比如性能低、监控遗漏等问题。听闻ELK是一个广泛采用的日志监控解决方案，所以尝试在一个新项目中使用<code>ELK</code>搭建一个系统日志监控平台。</p>
+<a id="more"></a>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;公司产品一直没有个真正的日志监控系统，现在的日志系统的是通过实现&lt;code&gt;javax.servlet.Filter&lt;/code&gt;来实现访问的监控，这种方式在使用过程遇到了非常多的问题，比如性能低、监控遗漏等问题。听闻ELK是一个广泛采用的日志监控解决方案，所以尝试在一个新项目中使用&lt;code&gt;ELK&lt;/code&gt;搭建一个系统日志监控平台。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="ELK Tomcat" scheme="https://zzhf.github.com/tags/ELK-Tomcat/"/>
+    
+  </entry>
   
   <entry>
     <title>leaflet util</title>
