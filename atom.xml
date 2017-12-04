@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-11-29T15:24:52.742Z</updated>
+  <updated>2017-12-04T15:50:31.281Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vuex之State</title>
+    <link href="https://zzhf.github.com/2017/12/04/Vuex%E4%B9%8BState/"/>
+    <id>https://zzhf.github.com/2017/12/04/Vuex之State/</id>
+    <published>2017-12-04T14:39:45.000Z</published>
+    <updated>2017-12-04T15:50:31.281Z</updated>
+    
+    <content type="html"><![CDATA[<p>Vuex是一个专门为Vue程序开发的状态管理模式。</p>
+<a id="more"></a>
+<p><code>store</code>是Vuex的一个核心，你的应用的状态可通过Vuex在<code>store</code>中管理。但是与普通的对象又有区别，区别主要有以下两点：</p>
+<ol>
+<li><p>Vuex的状态存储是响应式的。当组件从store中读取状态的时候，若store中的状态发生变化，那么相应的组件亦会得到通知，这可以与<br><code>computed</code>很好的结合起来使用;</p>
+</li>
+<li><p>你不能直接改变store中的状态。改变store中的状态的唯一途径就是显式地提交（commit）mutation（通过action间接的提交mutation）。</p>
+</li>
+</ol>
+<h4 id="最简单的Store"><a href="#最简单的Store" class="headerlink" title="最简单的Store"></a>最简单的<code>Store</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//如果在模块化构建系统中，请确保在开头调用Vue.use(Vuex)</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.store(&#123;</div><div class="line">    state: &#123;</div><div class="line">        count: <span class="number">0</span></div><div class="line">    &#125;,</div><div class="line">    mutations: &#123;</div><div class="line">        increment (state) &#123;</div><div class="line">            state.count ++</div><div class="line">        &#125;        </div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">//通过调用increment来实现state中count的状态变更</span></div><div class="line">store.commit(<span class="string">'increment'</span>);</div><div class="line"></div><div class="line"><span class="comment">//获取state</span></div><div class="line"><span class="built_in">console</span>.log(store.state.count)</div></pre></td></tr></table></figure>
+<h4 id="实现Vue组件获取Vuex状态的方式"><a href="#实现Vue组件获取Vuex状态的方式" class="headerlink" title="实现Vue组件获取Vuex状态的方式"></a>实现Vue组件获取Vuex状态的方式</h4><ol>
+<li>直接访问store</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模块化构建系统需引入store</span></div><div class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'vuex'</span></div><div class="line"></div><div class="line"><span class="comment">//创建一个Count组件</span></div><div class="line"><span class="keyword">const</span> Counter = &#123;</div><div class="line">    template: <span class="string">`&lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;`</span>,</div><div class="line">    computed: &#123;</div><div class="line">        count() &#123;</div><div class="line">            <span class="keyword">return</span> store.state.count</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方式存在的问题就是每一个需要使用store的组件都需要导入</p>
+<ol>
+<li>通过根组件注入到所有的子组件</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vuex是一个专门为Vue程序开发的状态管理模式。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>基于ELK搭建日志监控平台</title>
