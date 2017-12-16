@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-12-04T16:15:58.403Z</updated>
+  <updated>2017-12-16T09:38:02.055Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>批处理常用命令总结</title>
+    <link href="https://zzhf.github.com/2017/12/16/%E6%89%B9%E5%A4%84%E7%90%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/"/>
+    <id>https://zzhf.github.com/2017/12/16/批处理常用命令总结/</id>
+    <published>2017-12-16T09:29:38.000Z</published>
+    <updated>2017-12-16T09:38:02.055Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="什么是批处理命令"><a href="#什么是批处理命令" class="headerlink" title="什么是批处理命令"></a>什么是批处理命令</h1><h1 id="常用的批处理"><a href="#常用的批处理" class="headerlink" title="常用的批处理"></a>常用的批处理</h1><ul>
+<li><code>echo</code></li>
+<li><code>@</code></li>
+<li><code>for循环</code></li>
+<li><code>goto</code>与<code>label</code></li>
+<li><code>call</code></li>
+</ul>
+<h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@echo JAVA_HOME</div></pre></td></tr></table></figure>
+<h4 id=""><a href="#" class="headerlink" title="@"></a>@</h4><h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;什么是批处理命令&quot;&gt;&lt;a href=&quot;#什么是批处理命令&quot; class=&quot;headerlink&quot; title=&quot;什么是批处理命令&quot;&gt;&lt;/a&gt;什么是批处理命令&lt;/h1&gt;&lt;h1 id=&quot;常用的批处理&quot;&gt;&lt;a href=&quot;#常用的批处理&quot; class=&quot;headerli
+    
+    </summary>
+    
+    
+      <category term="批处理 Batch" scheme="https://zzhf.github.com/tags/%E6%89%B9%E5%A4%84%E7%90%86-Batch/"/>
+    
+  </entry>
   
   <entry>
     <title>Vuex之State</title>
