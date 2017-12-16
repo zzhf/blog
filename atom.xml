@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://zzhf.github.com/"/>
-  <updated>2017-12-16T09:38:02.055Z</updated>
+  <updated>2017-12-16T17:50:16.132Z</updated>
   <id>https://zzhf.github.com/</id>
   
   <author>
@@ -20,21 +20,70 @@
     <link href="https://zzhf.github.com/2017/12/16/%E6%89%B9%E5%A4%84%E7%90%86%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/"/>
     <id>https://zzhf.github.com/2017/12/16/批处理常用命令总结/</id>
     <published>2017-12-16T09:29:38.000Z</published>
-    <updated>2017-12-16T09:38:02.055Z</updated>
+    <updated>2017-12-16T17:50:16.132Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="什么是批处理命令"><a href="#什么是批处理命令" class="headerlink" title="什么是批处理命令"></a>什么是批处理命令</h1><h1 id="常用的批处理"><a href="#常用的批处理" class="headerlink" title="常用的批处理"></a>常用的批处理</h1><ul>
-<li><code>echo</code></li>
-<li><code>@</code></li>
-<li><code>for循环</code></li>
-<li><code>goto</code>与<code>label</code></li>
-<li><code>call</code></li>
+    <content type="html"><![CDATA[<p>在研究ELK的过程中发现elastic和logstash必须依赖1.8以上版本的jdk，但是公司的项目主要是依赖于1.7版本的jdk，更要命的是项目所使用的ESB解决方案（<code>Mule ESB</code>）只支持1.6和1.7的特定版本。经过百度一番之后发现可以修改<code>elastic</code>和<code>logstash</code>的<code>bat</code>文件来显式指定<code>jdk</code>来解决程序依赖全局<code>JAVA_HOME</code>的问题</p>
+<a id="more"></a>
+<h1 id="什么是批处理命令"><a href="#什么是批处理命令" class="headerlink" title="什么是批处理命令"></a>什么是批处理命令</h1><p>批处理是一种简化的脚本语言，是由DOS或者windows系统内嵌的命令解释器（COMMAND.COM/CMD.EXE）解释运行。类型与<code>shell</code>脚本</p>
+<h1 id="常用的命令"><a href="#常用的命令" class="headerlink" title="常用的命令"></a>常用的命令</h1><ul>
+<li><code>echo</code> 显示消息，或将命令回显打开或关闭</li>
+<li><code>rem</code> 注释代码（可回显）</li>
+<li><code>pause</code> 暂停批处理文件的处理并显示消息</li>
+<li><code>call</code> 从另一个批处理程序调用这个</li>
+<li><code>start</code> 启动单独的窗口以运行指定的程序或命令</li>
+<li><code>goto</code>与<code>label</code> 命令跳转 </li>
+<li><code>set</code> 设置变量</li>
 </ul>
-<h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@echo JAVA_HOME</div></pre></td></tr></table></figure>
-<h4 id=""><a href="#" class="headerlink" title="@"></a>@</h4><h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4>]]></content>
+<p>更多详情可在windows命令窗口输入HELP来查看详情</p>
+<h1 id="常用的符号"><a href="#常用的符号" class="headerlink" title="常用的符号"></a>常用的符号</h1><h4 id="符号"><a href="#符号" class="headerlink" title="@符号"></a><code>@</code>符号</h4><p>屏蔽当前行的回显</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@echo off</div></pre></td></tr></table></figure>
+<p>这行命令表示不在控制台显示<code>echo off</code>命令， 同时<code>echo off</code>又可以关闭后续命令的回显，因此这是大部分批处理文件的通用起始代码。</p>
+<h4 id="重定向符号（输出）"><a href="#重定向符号（输出）" class="headerlink" title="重定向符号（输出）"></a>重定向符号（输出）</h4><p>将输出信息重定向至指定的设备或文件。系统默认输出到显示器<br>重定向符号有<code>&gt;</code>,<code>&gt;&gt;</code>两种</p>
+<p><code>&gt;</code> 符号会覆盖目标的原有内容<br><code>&gt;&gt;</code> 符号则是在目标内容的结尾追加</p>
+<h4 id="重定向符号（输入）"><a href="#重定向符号（输入）" class="headerlink" title="重定向符号（输入）"></a>重定向符号（输入）</h4><p>将输入信息来源重定向为指定的设备或文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line"></div><div class="line">echo 拖动txt文件至窗口查看文件名称</div><div class="line">set /p content=</div><div class="line">echo %content%</div><div class="line">pause</div></pre></td></tr></table></figure>
+<h4 id="管道符号"><a href="#管道符号" class="headerlink" title="管道符号 |"></a>管道符号 <code>|</code></h4><p>将管道符号前面的命令的输出结果输出到管道符号后面的命令中去，作为下一个命令的输入</p>
+<h4 id="转义符号"><a href="#转义符号" class="headerlink" title="转义符号"></a>转义符号</h4><p>将特殊符号转化为一般符号 特殊符号指： <code>|</code> <code>&amp;</code> <code>&gt;</code> <code>&lt;</code></p>
+<h4 id="逻辑命令-amp-amp-amp"><a href="#逻辑命令-amp-amp-amp" class="headerlink" title="逻辑命令 &amp; &amp;&amp; ||"></a>逻辑命令 <code>&amp;</code> <code>&amp;&amp;</code> <code>||</code></h4><p><code>&amp;</code> 连接多个DOS命令，并把这些命令按顺序执行，而不管是否有命令执行失败；<br><code>&amp;&amp;</code> 当前面的命令成功执行才会执行后面的命令，否则不执行（起到短路的效果）<br><code>||</code> 当前面的命令执行失败时才会执行后面的命令，否则不执行</p>
+<h1 id="语句结构"><a href="#语句结构" class="headerlink" title="语句结构"></a>语句结构</h1><h4 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h4><p>if语句实现条件判断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set /p choice=是否显示当前时间？ （y/n）</div><div class="line">if /i not %choice% EQU n echo 当前时间是： %date% %time%</div></pre></td></tr></table></figure></p>
+<h4 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h4><p>for语句可以实现类似于C语言里面的循环结构，当然for语句的功能要更强大一点，通过不同的开关可以实现更多的功能。for语句有多个开关，不同开关将会实现不同的功能。</p>
+<ol>
+<li>无开关<br>无开关的for语句能够对设定的范围内进行循环，其命令格式为<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FOR %%variable IN (set) DO command</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">for %%i in (a,&quot;b c&quot;,d) do echo %%i</div></pre></td></tr></table></figure></p>
+<ol>
+<li>含开关<code>/L</code><br>含开关/L的for语句，可以根据set里面的设置进行循环，从而实现对循环次数的直接控制。其命令格式为：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FOR /L %%variable IN (start, step, end) DO command</div></pre></td></tr></table></figure>
+<p>其中，start为开始计数的初始值，step为每次递增的值，end为结束值。当end小于start时，step需要设置为负数。</p>
+<p>示例: 新建5个文件夹，文件夹名称依次为1,3,5,7,9<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">for /l %%i in (1, 2, 10) do md %%i</div><div class="line">pause</div></pre></td></tr></table></figure></p>
+<ol>
+<li>含开关<code>/F</code><br>含开关<code>/F</code>的<code>for</code>语句具有最强大的功能，它能够对字符串进行操作，也能够对命令的返回值进行操作，还可以访问硬盘上的<code>ASCII</code>码文件，比如<code>txt</code>文档等。其命令格式为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">FOR /F [&quot;options&quot;] %%variable IN (set) DO command</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中set为（”string”, “commond”, “file-set”）中的一个</p>
+<h1 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h1><ol>
+<li>SystemDrive 当前启动的系统所在的分区</li>
+<li>SystemRoot 当前系统所在的目录</li>
+<li>windir 当前启动的系统所在的目录</li>
+<li>userprofile 当前用户数据变量</li>
+<li>cd 当前的目录</li>
+<li>computername 返回计算机名称</li>
+<li>username 返回当前登录的用户的名称</li>
+<li>date 返回当前日期</li>
+<li>time 返回当前时间</li>
+<li>os 返回操作系统名称</li>
+<li><p>path 可执行文件的搜索路径</p>
+</li>
+<li><p>JAVA_HOME （配置的全局变量）</p>
+</li>
+</ol>
+]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;什么是批处理命令&quot;&gt;&lt;a href=&quot;#什么是批处理命令&quot; class=&quot;headerlink&quot; title=&quot;什么是批处理命令&quot;&gt;&lt;/a&gt;什么是批处理命令&lt;/h1&gt;&lt;h1 id=&quot;常用的批处理&quot;&gt;&lt;a href=&quot;#常用的批处理&quot; class=&quot;headerli
+      &lt;p&gt;在研究ELK的过程中发现elastic和logstash必须依赖1.8以上版本的jdk，但是公司的项目主要是依赖于1.7版本的jdk，更要命的是项目所使用的ESB解决方案（&lt;code&gt;Mule ESB&lt;/code&gt;）只支持1.6和1.7的特定版本。经过百度一番之后发现可以修改&lt;code&gt;elastic&lt;/code&gt;和&lt;code&gt;logstash&lt;/code&gt;的&lt;code&gt;bat&lt;/code&gt;文件来显式指定&lt;code&gt;jdk&lt;/code&gt;来解决程序依赖全局&lt;code&gt;JAVA_HOME&lt;/code&gt;的问题&lt;/p&gt;
     
     </summary>
     
